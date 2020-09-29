@@ -25,6 +25,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.red
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
@@ -50,15 +53,35 @@ class EggTimerFragment : Fragment() {
         binding.eggTimerViewModel = viewModel
         binding.lifecycleOwner = this.viewLifecycleOwner
 
-        // TODO: Step 1.7 call create channel
+        // Step 1.7 call create channel
+        createChannel(
+            getString(R.string.egg_notification_channel_id),
+            getString(R.string.egg_notification_channel_name)
+        )
 
         return binding.root
     }
 
     private fun createChannel(channelId: String, channelName: String) {
-        // TODO: Step 1.6 START create a channel
+        //  Step 1.6 START create a channel
 
-        // TODO: Step 1.6 END create a channel
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            val notificationChannel: NotificationChannel =
+                NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_LOW)
+
+            notificationChannel.enableLights(true)
+            notificationChannel.lightColor = notificationChannel.lightColor.red
+            notificationChannel.enableVibration(true)
+            notificationChannel.description = "Time for breakfast"
+
+            val notificationManager =
+                requireActivity().getSystemService(NotificationManager::class.java)
+
+            notificationManager.createNotificationChannel(notificationChannel)
+            //  Step 1.6 END create a channel
+        }
+
+            // do nothing in else here as notification channels are only required for API 26+
 
     }
 
