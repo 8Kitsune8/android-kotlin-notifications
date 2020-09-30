@@ -25,6 +25,7 @@ import android.content.Intent
 import android.os.SystemClock
 import android.text.format.DateUtils
 import androidx.core.app.AlarmManagerCompat
+import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 
 class SnoozeReceiver: BroadcastReceiver() {
@@ -47,6 +48,14 @@ class SnoozeReceiver: BroadcastReceiver() {
             triggerTime,
             notifyPendingIntent
         )
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            val notificationManager = context.getSystemService(NotificationManager::class.java) as NotificationManager
+            notificationManager.cancelAll()
+
+        } else {
+            TODO("VERSION.SDK_INT < M")
+        }
     }
 
 }
