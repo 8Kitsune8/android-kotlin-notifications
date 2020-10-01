@@ -57,7 +57,7 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
     val bigPicStyle = NotificationCompat.BigPictureStyle()
         .bigPicture(eggImage)
         .bigLargeIcon(null)
-    // TODO: Step 2.2 add snooze action
+    //  Step 2.2 add snooze action
     val snoozeIntent = Intent(applicationContext, SnoozeReceiver::class.java)
     val snoozePendingIntent = PendingIntent.getBroadcast(
         applicationContext,
@@ -89,14 +89,15 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         .setStyle(bigPicStyle)
         .setLargeIcon(eggImage)
 
-        // TODO: Step 2.3 add snooze action
+        //  Step 2.3 add snooze action
         .addAction(
             R.drawable.egg_icon,
             applicationContext.getString(R.string.snooze),
             snoozePendingIntent
         )
 
-        // TODO: Step 2.5 set priority
+        //  Step 2.5 set priority (for android 7.1- API lvl 25-)
+        .setPriority(NotificationCompat.PRIORITY_HIGH)
 
     //  Step 1.4 call notify
     notify(NOTIFICATION_ID, builder.build())

@@ -67,13 +67,17 @@ class EggTimerFragment : Fragment() {
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             val notificationChannel: NotificationChannel =
-                NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_LOW)
+                NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_HIGH)
+                    .apply {
+                        setShowBadge(false)
+                    }
+
 
             notificationChannel.enableLights(true)
-            notificationChannel.lightColor = notificationChannel.lightColor.red
+            notificationChannel.lightColor = Color.RED
             notificationChannel.enableVibration(true)
             notificationChannel.description = "Time for breakfast"
-
+            //This is to disable dot notification at app icon
             val notificationManager =
                 requireActivity().getSystemService(NotificationManager::class.java)
 

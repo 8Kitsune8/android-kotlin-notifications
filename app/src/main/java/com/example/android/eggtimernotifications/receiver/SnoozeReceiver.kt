@@ -49,13 +49,9 @@ class SnoozeReceiver: BroadcastReceiver() {
             notifyPendingIntent
         )
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            val notificationManager = context.getSystemService(NotificationManager::class.java) as NotificationManager
-            notificationManager.cancelAll()
+        val notificationManager = ContextCompat.getSystemService(context,NotificationManager::class.java) as NotificationManager
+        notificationManager.cancelAll()
 
-        } else {
-            TODO("VERSION.SDK_INT < M")
-        }
     }
 
 }
